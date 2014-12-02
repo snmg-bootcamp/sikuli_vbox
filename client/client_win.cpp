@@ -3,7 +3,7 @@
 // Some codes is got from https://gist.github.com/vivithemage/9517678
 // Created by Alec Su
 // Created in 2014/10/31
-// Last Motify: 2014/11/27
+// Last Motify: 2014/12/2
 #include <iostream>
 #include <cstdlib>
 #include <string>
@@ -17,10 +17,24 @@ int main(int argc, char *argv[])
 {
 	char url[500], curl_command[550];
 	bool down_suc = 0;
-	string url_str;
-	cout << "Input sikuli script url: ";
-	getline(cin, url_str, '\n');
-	strcpy_s(url, url_str.c_str());
+	if (argc == 2)
+	{
+		strcpy_s(url, argv[1]);
+	}
+	else if (argc == 1)
+	{
+		string url_str;
+		cout << "Input sikuli script url: ";
+		getline(cin, url_str, '\n');
+		strcpy_s(url, url_str.c_str());
+	}
+	else
+	{
+		cout << "Command error!\n";
+		cout << "Press any key to exit...";
+		_getch();
+		return 0;
+	}
 	cout << "Downloading script...\n";
 	sprintf_s(curl_command, "data\\curl\\curl.exe -s -O \"%s\"", url); // Create a command to use in curl
 	system(curl_command);// Run curl to download sikuli scripts
