@@ -1,4 +1,4 @@
-// Sikuli Vbox Client for OS X
+// Sikuli Vbox Client
 
 // Some codes is got from https://gist.github.com/vivithemage/9517678
 // Created by Alec Su
@@ -16,11 +16,22 @@ int main(int argc, char *argv[])
 {
     char url[500], curl_command[550];
     bool down_suc = 0;
-    string url_str;
-    cout << "Input sikuli script url: ";
-    getline(cin, url_str, '\n');
-    strcpy(url, url_str.c_str());
-    cout << "Downloading script...\n";
+    if (argc == 2)
+    {
+        strcpy(url, argv[1]);
+    }
+    else if (argc == 1)
+    {
+        string url_str;
+        cout << "Input sikuli script url: ";
+        getline(cin, url_str, '\n');
+        strcpy(url, url_str.c_str());
+    }
+    else
+    {
+        cout << "Command error!\n";
+        return 0;
+    }
     sprintf(curl_command, "curl -s -O \"%s\"", url); // Create a command to use in curl
     system(curl_command);// Run curl to download sikuli scripts
     // list all files in current directory.
