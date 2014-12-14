@@ -14,8 +14,15 @@ using namespace boost::filesystem;
 
 int main(int argc, char *argv[])
 {
+    path sikuli("/Applications/Sikuli-IDE.app/Contents/Resources/Java/sikuli-ide.jar");
+    if(!exists(sikuli))
+    {
+        cout << "Cannot find sikuli.\n" << "Please download sikuli at http://www.sikuli.org/download.html\n";
+        return 0;
+    }
     char url[500], curl_command[550];
     bool down_suc = 0;
+    cout << argv[0];
     if (argc == 2)
     {
         strcpy(url, argv[1]);
@@ -32,11 +39,11 @@ int main(int argc, char *argv[])
         cout << "Command error!\n";
         return 0;
     }
-    sprintf(curl_command, "curl -s -O \"%s\"", url); // Create a command to use in curl
+    sprintf(curl_command, "mkdir tmp; cd tmp; curl -s -O \"%s\"", url); // Create a command to use in curl
     system(curl_command);// Run curl to download sikuli scripts
     // list all files in current directory.
     //You could put any file path in here, e.g. "/home/me/mwah" to list that directory
-    path p(".");
+    path p("./tmp");
     
     directory_iterator end_itr;
     
@@ -58,8 +65,8 @@ int main(int argc, char *argv[])
     if (down_suc == 1) // If download successful
     {
         cout << "Running Sikuli script...\n";
-        system("java -Xms64M -Xmx512M -Dfile.encoding=UTF-8 -Dsikuli.FromCommandLine -jar data/sikuli/sikulix.jar -r *.skl"); // Run sikuli script
-        system("rm -f *.skl"); //Delete sikuli stript
+        system("cd tmp; java -Xms64M -Xmx512M -Dfile.encoding=UTF-8 -Dsikuli.FromCommandLine -jar /Applications/Sikuli-IDE.app/Contents/Resources/Java/sikuli-ide.jar -r *.skl"); // Run sikuli script
+        system("rm -r -f tmp"); //Delete sikuli stript and tmp directory
     }
     else // If download failed
     {
