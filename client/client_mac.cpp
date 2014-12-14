@@ -22,7 +22,6 @@ int main(int argc, char *argv[])
     }
     char url[500], curl_command[550];
     bool down_suc = 0;
-    cout << argv[0];
     if (argc == 2)
     {
         strcpy(url, argv[1]);
