@@ -14,10 +14,10 @@ using namespace boost::filesystem;
 
 int main(int argc, char *argv[])
 {
-    path sikuli("/Applications/Sikuli-IDE.app/Contents/Resources/Java/sikuli-ide.jar");
+    path sikuli("/Applications/SikuliX-IDE.app/Contents/sikuli-ide.jar");
     if(!exists(sikuli))
     {
-        cout << "Cannot find sikuli.\n" << "Please download sikuli at http://www.sikuli.org/download.html\n";
+        cout << "Cannot find sikuli.\n" << "Please be sure that you have installed SikuliX-1.1.0.";
         return 0;
     }
     char url[500], curl_command[550];
@@ -64,12 +64,13 @@ int main(int argc, char *argv[])
     if (down_suc == 1) // If download successful
     {
         cout << "Running Sikuli script...\n";
-        system("cd tmp; java -Xms64M -Xmx512M -Dfile.encoding=UTF-8 -Dsikuli.FromCommandLine -jar /Applications/Sikuli-IDE.app/Contents/Resources/Java/sikuli-ide.jar -r *.skl"); // Run sikuli script
+        system("cd tmp; java -Xms64M -Xmx512M -Dfile.encoding=UTF-8 -Dsikuli.FromCommandLine -jar /Applications/SikuliX-IDE.app/Contents/sikuli-ide.jar -r *.skl"); // Run sikuli script
         system("rm -r -f tmp"); //Delete sikuli stript and tmp directory
     }
     else // If download failed
     {
         cout << "Download failed. Please check the url.\n\n";
+        system("rm -r -f tmp"); //Detele temporary directory
     }
     return 0;
 }
